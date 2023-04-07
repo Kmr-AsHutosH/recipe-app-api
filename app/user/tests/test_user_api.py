@@ -17,7 +17,7 @@ def create_user(**params):
     return get_user_model().objects.create_user(**params)
 
 
-class Public_User_Api_Tests(TestCase):
+class PublicUserApiTests(TestCase):
     """Test the public features of the user."""
     def setUp(self):
         self.client = APIClient()
@@ -53,7 +53,7 @@ class Public_User_Api_Tests(TestCase):
         payload = {
             'email': 'test@example.com',
             'password': 'pw',
-            'name': '   Test Name',
+            'name': ' Test name',
         }
         res = self.client.post(CREATE_USER_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
@@ -67,7 +67,7 @@ class Public_User_Api_Tests(TestCase):
         user_details = {
             'name': 'Test Name',
             'email': 'test@example.com',
-            'password': 'test-user-password123'
+            'password': 'test-user-password123',
         }
         create_user(**user_details)
 
@@ -78,7 +78,7 @@ class Public_User_Api_Tests(TestCase):
         res = self.client.post(TOKEN_URL, payload)
 
         self.assertIn('token', res.data)
-        self.assertEqual(res.status_code,status.HTTP_200_OK)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
 
     def test_create_token_bad_credentials(self):
         """Test returns error if  credentials invalid"""
@@ -111,7 +111,7 @@ class PrivateUserApiTests(TestCase):
         self.user = create_user(
             email='test@example.com',
             password='testpass123',
-            name='Test name',
+            name='Test Name',
         )
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
